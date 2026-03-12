@@ -130,7 +130,7 @@ Environment selection is controlled by the `ENVIRONMENT` variable in your `.env`
 1. **Clone the repository**
 
    ```bash
-   git clone git@github.com:joekariuki3/ecommerce_backend.git
+   git clone git@github.com:joelmuhoho/ecommerce_backend.git
    cd ecommerce_backend
    ```
 
@@ -157,7 +157,7 @@ Environment selection is controlled by the `ENVIRONMENT` variable in your `.env`
 1. **Clone and setup virtual environment**
 
    ```bash
-   git clone git@github.com:joekariuki3/ecommerce_backend.git
+   git clone git@github.com:joelmuhoho/ecommerce_backend.git
    cd ecommerce_backend
    python3 -m venv .venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
