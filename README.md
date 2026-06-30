@@ -100,40 +100,6 @@ The system is designed as a stateless API serving JSON responses to clients, bac
    ```bash
    uv run python manage.py runserver
    ```
-
-### Option 3: Local Development (Standard Python Virtual Env)
-
-If you prefer standard Python tools, you can use `venv` and `pip` with the generated `requirements.txt`.
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/joelmuhoho/ecommerce_backend.git
-   cd ecommerce_backend
-   ```
-2. **Create and activate virtual environment**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-5. **Run migrations and (optional) seed DB**
-   ```bash
-   python manage.py migrate
-   python manage.py seed_users_db
-   python manage.py seed_category_product_db
-   ```
-6. **Start the server**
-   ```bash
-   python manage.py runserver
-   ```
-
 ---
 
 ## Lessons Learned
