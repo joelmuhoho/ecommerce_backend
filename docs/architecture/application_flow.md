@@ -14,15 +14,13 @@ sequenceDiagram
     Nginx->>Gunicorn: Forward Request (proxy_pass)
     Gunicorn->>Django: Pass to WSGI application
     
-    rect rgb(240, 240, 240)
-        Note over Django: Django Request Handling
-        Django->>Django: Middleware Processing (Auth, CORS, Security)
-        Django->>Django: URL Routing
-        Django->>Django: View / ViewSet Execution
-        Django->>DB: Query Database (if required)
-        DB-->>Django: Return Data
-        Django->>Django: Serialize Data
-    end
+    Note over Django,DB: Django Request Handling
+    Django->>Django: Middleware Processing (Auth, CORS, Security)
+    Django->>Django: URL Routing
+    Django->>Django: View / ViewSet Execution
+    Django->>DB: Query Database (if required)
+    DB-->>Django: Return Data
+    Django->>Django: Serialize Data
     
     Django-->>Gunicorn: HTTP Response
     Gunicorn-->>Nginx: HTTP Response

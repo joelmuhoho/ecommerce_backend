@@ -3,32 +3,30 @@
 The following diagram illustrates the proposed production infrastructure for hosting the E-Commerce Backend on Amazon Web Services (AWS).
 
 ```mermaid
-architecture-beta
-    group aws(logos:aws)[AWS Cloud]
-    group vpc(logos:aws-vpc)[VPC] in aws
-    group public_subnets(logos:aws-vpc)[Public Subnets] in vpc
-    group private_subnets(logos:aws-vpc)[Private Subnets] in vpc
-
-    service route53(logos:aws-route-53)[Route 53] in aws
-    service cloudfront(logos:aws-cloudfront)[CloudFront] in aws
-    service s3(logos:aws-s3)[S3 Bucket (Static/Media)] in aws
+graph TD
+    Client((Client)) --> Route53[Route 53 DNS]
     
-    service alb(logos:aws-elastic-load-balancing)[Application Load Balancer] in public_subnets
-    service nat(logos:aws-nat-gateway)[NAT Gateway] in public_subnets
-
-    service ecs(logos:aws-ecs)[ECS Fargate (Django App)] in private_subnets
-    service rds(logos:aws-rds)[RDS PostgreSQL] in private_subnets
+    Route53 -->|Static/Media| CloudFront[CloudFront CDN]
+    CloudFront --> S3[S3 Bucket]
     
-    route53:R -- L:cloudfront
-    cloudfront:R -- L:s3
-    route53:R -- L:alb
-    alb:R -- L:ecs
-    ecs:R -- L:rds
-    ecs:R -- L:nat
+    Route53 -->|API Traffic| ALB[Application Load Balancer]
+    
+    subgraph VPC [AWS VPC]
+        subgraph PublicSubnets [Public Subnets]
+            ALB
+            NAT[NAT Gateway]
+        end
+        
+        subgraph PrivateSubnets [Private Subnets]
+            ECS[ECS Fargate: Django App]
+            RDS[(RDS PostgreSQL)]
+        end
+        
+        ALB -->|HTTPS Proxy| ECS
+        ECS -->|TCP:5432| RDS
+        ECS -->|Outbound Internet| NAT
+    end
 ```
-
-> [!NOTE]
-> We are using the experimental `architecture-beta` Mermaid diagram type here to visualize cloud infrastructure.
 
 ## Component Overview
 
