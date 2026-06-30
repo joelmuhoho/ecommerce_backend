@@ -9,15 +9,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # Install Python dependencies
-COPY requirements-prod.txt .
-RUN pip install --no-cache-dir -r requirements-prod.txt
+COPY pyproject.toml uv.lock ./
+# uv sync creates a virtual environment at .venv by default
+RUN uv sync --frozen --no-install-project
+# Explicitly install gunicorn as it's required for the CMD but missing from pyproject.toml
+RUN uv pip install gunicorn
 
 # Copy project files
 COPY . .
 
 # Set environment variable for production
 ENV ENVIRONMENT=production
+# Add virtual environment to PATH
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy Nginx configuration
 COPY nginx/nginx.conf /etc/nginx/sites-available/app
