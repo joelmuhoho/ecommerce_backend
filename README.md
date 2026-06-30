@@ -57,7 +57,7 @@ The system is designed as a stateless API serving JSON responses to clients, bac
 
 1. **Clone the repository**
    ```bash
-   git clone git@github.com:joekariuki3/ecommerce_backend.git
+   git clone git@github.com:joelmuhoho/ecommerce_backend.git
    cd ecommerce_backend
    ```
 2. **Set up environment**
