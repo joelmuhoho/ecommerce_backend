@@ -19,14 +19,26 @@ jobs:
           echo "Target: $TARGET"
           echo "Source: $SOURCE"
 
-          if [ "$TARGET" = "main" ] && [ "$SOURCE" != "develop" ]; then
-            echo "❌ Only 'develop' can create PRs to 'main'."
-            exit 1
+          if [ "$TARGET" = "main" ]; then
+            case "$SOURCE" in
+              develop | release/* | hotfix/*)
+                ;;
+              *)
+                echo "❌ Invalid PR source '$SOURCE' for target 'main'."
+                echo "Allowed sources: 'develop', 'release/*', 'hotfix/*'"
+                exit 1
+                ;;
+            esac
+          elif [ "$TARGET" = "develop" ]; then
+            case "$SOURCE" in
+              feature/* | fix/* | bugfix/* | docs/* | test/* | infra/* | chore/* | dependabot/* | renovate/*)
+                ;;
+              *)
+                echo "❌ Invalid PR source '$SOURCE' for target 'develop'."
+                echo "Allowed sources: 'feature/*', 'fix/*', 'bugfix/*', 'docs/*', 'test/*', 'infra/*', 'chore/*', 'dependabot/*', 'renovate/*'"
+                exit 1
+                ;;
+            esac
           fi
 
-          if [ "$TARGET" = "develop" ] && [[ "$SOURCE" != feature/* ]]; then
-            echo "❌ Only 'feature/*' branches can create PRs to 'develop'."
-            exit 1
-          fi
-
-          echo "✅ PR source is valid."
+          echo "✅ PR source '$SOURCE' is valid for target '$TARGET'."
