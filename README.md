@@ -1,6 +1,6 @@
 # E-Commerce Backend (Django + DRF)
 
-A modern, scalable backend service for an e-commerce platform built with Django and Django REST Framework.
+A modular e-commerce backend service that exposes RESTful APIs for authentication, product/catalog management, cart operations, order processing, and payment-ready checkout flows. Built with maintainable domain-driven structure, persistence integration, and production-focused practices such as validation, error handling, and environment-based configuration.
 
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 [![Django](https://img.shields.io/badge/django-5.2+-green.svg)](https://djangoproject.com)
